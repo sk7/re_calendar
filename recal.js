@@ -20,7 +20,7 @@ function getData() {
     if (moderator) description += "Moderator: " + moderator.textContent.trim() + "\n";
 
     var short_thesis = document.querySelector('.field-name-field-session-short-thesis .field__items');
-    if (short_thesis) description += "\nShort Thesis: " + short_thesis.textContent.trim();
+    if (short_thesis) description += "\n\nShort Thesis: " + short_thesis.textContent.trim();
 
     return {
         'start': times[0].dateTime,
