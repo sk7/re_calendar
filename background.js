@@ -75,9 +75,7 @@ function addToCal(tab) {
   console.log("Add to calendar");
 
   browser.tabs.executeScript({
-    code: '(' + function() {
-        return getData();
-    } + ')();'
+    code: 'getData()'
   }, function(result) {
     data = result[0];
 
