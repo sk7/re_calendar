@@ -39,18 +39,11 @@ browser.tabs.onUpdated.addListener((id, changeInfo, tab) => {
   initializePageAction(tab);
 });
 
-function onStartedDownload(id) {
-  console.log(`Started downloading: ${id}`);
-}
-
-function onFailed(error) {
-  console.log(`Download failed: ${error}`);
-}
 
 var textFile = null;
 
 function downloadIcsFile(text, filename) {
-    console.log("Preparing file");
+    console.log("Preparing ics file");
 
     var data = new Blob([text], {type: 'text/x-vCalendar'});
 
@@ -62,17 +55,19 @@ function downloadIcsFile(text, filename) {
 
     file_url = window.URL.createObjectURL(data);
 
-    console.log("Starting download");
-    downloading = browser.downloads.download({
-        url: file_url,
-        filename: filename
-    });
+    console.log("Opening ics file");
 
-    downloading.then(onStartedDownload, onFailed);
+    // Open the file in a new tab and close the tab immediately.
+    browser.tabs.create({
+      url:file_url
+    })
+    .then(tab => {
+      browser.tabs.remove(tab.id);
+    });
 }
 
 function addToCal(tab) {
-  console.log("Add to calendar");
+  console.log("Page action clicked");
 
   browser.tabs.executeScript({
     code: 'getData()'
