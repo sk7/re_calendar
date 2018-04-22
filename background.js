@@ -3,7 +3,11 @@
 Returns true only if this page is supported for events
 */
 function isSupportedPage(url) {
-  return url.indexOf('https://18.re-publica.com/') == 0
+  supportedPages = [
+    'https://18.re-publica.com/en/session/',
+    'https://18.re-publica.com/de/session/'
+  ]
+  return supportedPages.filter(x => url.indexOf(x) == 0).length > 0
 }
 
 /*
