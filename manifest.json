@@ -11,24 +11,11 @@
     }
   },
 
-
   "icons": {
     "18": "icons/ic_alarm_add_black_18.png",
     "24": "icons/ic_alarm_add_black_24.png",
-    "48": "icons/ic_alarm_add_black_48.png",
-    "72": "icons/ic_alarm_add_black_72.png",
-    "96": "icons/ic_alarm_add_black_96.png"
+    "48": "icons/ic_alarm_add_black_48.png"
   },
-
-  // "browser_action": {
-  //   "default_icon": {
-  //     "18": "icons/ic_alarm_add_black_18.png",
-  //     "24": "icons/ic_alarm_add_black_24.png",
-  //     "48": "icons/ic_alarm_add_black_48.png",
-  //     "72": "icons/ic_alarm_add_black_72.png",
-  //     "96": "icons/ic_alarm_add_black_96.png"
-  //   }
-  // },
 
   "background": {
     "scripts": ["libs/ics.min.js", "background.js"]
