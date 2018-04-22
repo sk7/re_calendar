@@ -30,8 +30,3 @@ function getData() {
         'description': description
     }
 }
-
-function testRPC() {
-    console.log("rpc works");
-}
-
