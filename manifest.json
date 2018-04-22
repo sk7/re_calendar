@@ -50,10 +50,7 @@
   "permissions": [
     "*://*.re-publica.com/*",
     "activeTab",
-    "tabs",
-    "downloads",
-    "storage",
-    "webNavigation"
+    "tabs"
   ]
 
 
