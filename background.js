@@ -17,6 +17,8 @@ Only operates on tabs whose URL's protocol is applicable.
 function initializePageAction(tab) {
   if (isSupportedPage(tab.url)) {
     browser.pageAction.show(tab.id);
+  } else {
+    browser.pageAction.hide(tab.id);
   }
 }
 
