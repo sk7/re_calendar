@@ -45,7 +45,7 @@ var textFile = null;
 function downloadIcsFile(text, filename) {
     console.log("Preparing ics file");
 
-    var data = new Blob([text], {type: 'text/x-vCalendar'});
+    var data = new Blob([text], {type: 'text/calendar'});
 
     // If we are replacing a previously generated file we need to
     // manually revoke the object URL to avoid memory leaks.
