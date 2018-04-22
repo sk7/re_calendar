@@ -34,21 +34,21 @@ browser.tabs.onUpdated.addListener((id, changeInfo, tab) => {
   initializePageAction(tab);
 });
 
-var textFile = null;
 
-function makeTextFile(text) {
-  var data = new Blob([text], {type: 'text/plain'});
 
-  // If we are replacing a previously generated file we need to
-  // manually revoke the object URL to avoid memory leaks.
-  if (textFile !== null) {
-    window.URL.revokeObjectURL(textFile);
-  }
+// function makeTextFile(text) {
+//   var data = new Blob([text], {type: 'text/x-vCalendar'});
 
-  textFile = window.URL.createObjectURL(data);
+//   // If we are replacing a previously generated file we need to
+//   // manually revoke the object URL to avoid memory leaks.
+//   if (textFile !== null) {
+//     window.URL.revokeObjectURL(textFile);
+//   }
 
-  return textFile;
-}
+//   textFile = window.URL.createObjectURL(data);
+
+//   return textFile;
+// }
 
 function onStartedDownload(id) {
   console.log(`Started downloading: ${id}`);
@@ -58,16 +58,25 @@ function onFailed(error) {
   console.log(`Download failed: ${error}`);
 }
 
-function downloadFile() {
-    console.log("Preparing file");
-    fileUrl = makeTextFile("hello world");
+var textFile = null;
 
-    console.log(fileUrl);
+function downloadIcsFile(text, filename) {
+    console.log("Preparing file");
+
+    var data = new Blob([text], {type: 'text/x-vCalendar'});
+
+    // If we are replacing a previously generated file we need to
+    // manually revoke the object URL to avoid memory leaks.
+    if (textFile !== null) {
+      window.URL.revokeObjectURL(textFile);
+    }
+
+    file_url = window.URL.createObjectURL(data);
 
     console.log("Starting download");
     downloading = browser.downloads.download({
-        url: fileUrl,
-        filename: "blah.txt"
+        url: file_url,
+        filename: filename
     });
 
     downloading.then(onStartedDownload, onFailed);
@@ -80,11 +89,14 @@ function addToCal(tab) {
     code: '(' + function() {
         return getData();
     } + ')();'
-  }, function(data) {
-    console.log(data[0]);
-    downloadFile();
+  }, function(result) {
+    data = result[0];
+    console.log(data);
 
-
+    var cal = ics();
+    cal.addEvent(data.title, "", data.room, data.start, data.end);
+    icsData = cal.build()
+    downloadIcsFile(icsData, "event.ics")
 
   });
 }
