@@ -81,12 +81,22 @@ function addToCal(tab) {
     //Always add URL to the beginning of description
     description = tab.url + "\\n\\n" + description;
 
+    // 'start' and 'end' have a 'Z' at the end, indicating that the datetime is UTC,
+    // but it should be local time, so just remove the Z.
+    // see https://www.kanzaki.com/docs/ical/dateTime.html
+    // ics.js doesn't support VTIMEZONE yet
+    var start = data.start;
+    var end = data.end;
+    if (start.slice(-1) == 'Z') start = start.slice(0, -1);
+    if (end.slice(-1) == 'Z') end = end.slice(0, -1);
+
     // the UID in the ICS file is necessary to differntiate between different
     // events. we can set the "uidDomain" in the constructor.
     // to get a uid, we combine the start date with a santized title
     var uiddomain = data.start.substr(0,10) + "-" + data.title.replace(/[^A-Za-z]/g, "").toLowerCase();
+
     var cal = ics(uiddomain);
-    cal.addEvent(data.title, description, data.location, data.start, data.end);
+    cal.addEvent(data.title, description, data.location, start, end);
     icsData = cal.build()
     downloadIcsFile(icsData, "event.ics")
   });
